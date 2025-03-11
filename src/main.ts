@@ -2,6 +2,7 @@ import './style.css';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div id="board-container">
+    <div id="date-display"></div>
     <div id="controls">
       <label for="fontSize">Tamaño:</label>
       <select id="fontSize">
@@ -38,6 +39,34 @@ const chalkColorSelect = document.getElementById(
   'chalkColor'
 ) as HTMLSelectElement;
 const board = document.getElementById('board') as HTMLDivElement;
+const dateDisplay = document.getElementById('date-display') as HTMLDivElement;
+
+// Función para actualizar la fecha
+function updateDate() {
+  const now = new Date();
+  const options: Intl.DateTimeFormatOptions = { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  };
+  const dateString = now.toLocaleDateString('es-ES', options);
+  
+  // Capitalizar la primera letra del día de la semana
+  const formattedDate = dateString.charAt(0).toUpperCase() + dateString.slice(1);
+  dateDisplay.textContent = formattedDate;
+}
+
+// Actualizar la fecha al cargar la página
+updateDate();
+
+// Comprobar y actualizar la fecha cada día a las 00:01
+setInterval(() => {
+  const now = new Date();
+  if (now.getHours() === 0 && now.getMinutes() === 1) {
+    updateDate();
+  }
+}, 60000); // Comprobar cada minuto
 
 fontSizeSelect.addEventListener('change', () => {
   board.style.fontSize = fontSizeSelect.value;
