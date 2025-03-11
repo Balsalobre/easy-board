@@ -26,7 +26,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </select>
     </div>
     <div id="board" contenteditable="true">
-      ¡Escribe en la pizarra!
+      ¡Hola mundo!
     </div>
   </div>
 `;
@@ -41,7 +41,6 @@ const chalkColorSelect = document.getElementById(
 const board = document.getElementById('board') as HTMLDivElement;
 const dateDisplay = document.getElementById('date-display') as HTMLDivElement;
 
-// Función para actualizar la fecha
 function updateDate() {
   const now = new Date();
   const options: Intl.DateTimeFormatOptions = { 
