@@ -31,42 +31,60 @@ body {
 
 #board-container {
   position: relative;
-  width: 90%;
+  width: min(95%, 1200px);
+  max-width: 1200px;
   border: 20px solid #8b5a2b;
-  border-radius: 5px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 6px 6px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.4), 
+    0 6px 10px rgba(0, 0, 0, 0.3), 
+    inset 0 0 30px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 5px #654321;
+  margin-top: 60px;
 }
 
 #date-display {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 15px;
+  right: 20px;
   font-family: 'chalk', 'little-days', cursive;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.6), 0 0 4px rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.7), 0 0 6px rgba(255, 255, 255, 0.4);
   z-index: 10;
-  padding: 5px;
-  background-color: transparent;
+  padding: 8px 12px;
+  background-color: rgba(44, 89, 52, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(2px);
 }
 
 #board {
   font-family: 'chalk', 'little-days', cursive;
   font-size: 6rem;
   font-weight: 400;
-  background-color: #2c5934; /* Verde oscuro de pizarra clásica */
+  background: linear-gradient(135deg, #2c5934 0%, #1e3d24 100%);
   width: 100%;
   min-height: 70vh;
-  padding: 40px 20px;
+  padding: 40px 30px;
   outline: none;
   overflow-y: auto;
   box-sizing: border-box;
   background-image: 
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-size: 25px 25px;
   position: relative;
+  cursor: text;
+  line-height: 1.2;
+  word-wrap: break-word;
+  border-radius: 0 0 5px 5px;
+}
+
+#board:empty:before {
+  content: "¡Bienvenido al tablero digital! Haz clic aquí para escribir...";
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
 }
 
 #board {
@@ -89,27 +107,101 @@ body {
 }
 
 #controls {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 10px;
-  border-radius: 5px;
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  background-color: rgba(139, 90, 43, 0.95);
+  padding: 15px 20px;
+  border-radius: 8px 8px 0 0;
   z-index: 1000;
-  font-size: 0.9rem;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  color: #f5f5f5;
 }
 
 #controls label {
-  margin-right: 5px;
+  margin-right: 8px;
   font-weight: bold;
+  color: #f5f5f5;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #controls select {
-  margin-right: 10px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  padding: 8px 12px;
+  border: 2px solid #654321;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#controls select:hover {
+  border-color: #8b5a2b;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#controls select:focus {
+  outline: none;
+  border-color: #a0652b;
+  box-shadow: 0 0 0 3px rgba(160, 101, 43, 0.3);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn-clear {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-clear:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.btn-erase {
+  background-color: #f39c12;
+  color: white;
+}
+
+.btn-erase:hover {
+  background-color: #d68910;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
+}
+
+.btn-erase.active {
+  background-color: #e67e22;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 #board-container::after {
@@ -121,5 +213,61 @@ body {
   width: 60%;
   height: 20px;
   background-color: #8b5a2b;
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #app {
+    padding: 10px;
+  }
+  
+  #board-container {
+    width: 100%;
+    border-width: 15px;
+  }
+  
+  #controls {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 15px;
+    top: -80px;
+  }
+  
+  .control-group {
+    justify-content: center;
+  }
+  
+  .action-buttons {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  #board {
+    font-size: 3rem;
+    padding: 30px 20px;
+    min-height: 60vh;
+  }
+  
+  #date-display {
+    font-size: 1.2rem;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  #controls {
+    top: -100px;
+  }
+  
+  #board {
+    font-size: 2.5rem;
+    padding: 25px 15px;
+  }
+  
+  .btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
 }
